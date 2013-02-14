@@ -39,19 +39,19 @@
     <!-- Form Factor Ginjectors -->
     
     <!-- Desktop -->
-    <replace-with class="com.gwtplatform.samples.mobile.client.gin.desktop.DesktopGinjectorProvider">
-        <when-type-is class="com.gwtplatform.samples.mobile.client.gin.GinjectorProvider"/>
+    <replace-with class="com.gwtplatform.samples.mobile.client.gin.desktop.MobileModule">
+        <when-type-is class="com.gwtplatform.samples.mobile.client.gin.ClientModule"/>
     </replace-with>
 
     <!-- Tablet -->
-    <replace-with class="com.gwtplatform.samples.mobile.client.gin.tablet.TabletGinjectorProvider">
-        <when-type-is class="com.gwtplatform.samples.mobile.client.gin.GinjectorProvider"/>
+    <replace-with class="com.gwtplatform.samples.mobile.client.gin.tablet.TabletModule">
+        <when-type-is class="com.gwtplatform.samples.mobile.client.gin.ClientModule"/>
         <when-property-is name="formfactor" value="tablet"/>
     </replace-with>
 
     <!-- Mobile -->
-    <replace-with class="com.gwtplatform.samples.mobile.client.gin.mobile.MobileGinjectorProvider">
-        <when-type-is class="com.gwtplatform.samples.mobile.client.gin.GinjectorProvider"/>
+    <replace-with class="com.gwtplatform.samples.mobile.client.gin.mobile.MobileModule">
+        <when-type-is class="com.gwtplatform.samples.mobile.client.gin.ClientModule"/>
         <when-property-is name="formfactor" value="mobile"/>
     </replace-with>
 </module>

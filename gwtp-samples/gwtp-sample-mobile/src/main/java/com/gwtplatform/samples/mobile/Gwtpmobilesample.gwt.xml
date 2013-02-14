@@ -4,32 +4,23 @@
 <module rename-to='gwtphplacesample'>
     <!-- Inherit the core Web Toolkit stuff. -->
     <inherits name='com.google.gwt.user.User' />
-    <inherits name="com.google.gwt.uibinder.UiBinder" />
-    <inherits name="com.google.gwt.inject.Inject" />
 
-    <inherits name='com.gwtplatform.dispatch.Dispatch' />
-    <inherits name="com.gwtplatform.mvp.Mvp" />
-
-    <!-- Inherit the default GWT style sheet. You can change -->
-    <!-- the theme of your GWT application by uncommenting -->
-    <!-- any one of the following lines. -->
+    <!-- Inherit the default GWT style sheet. -->
     <inherits name='com.google.gwt.user.theme.standard.Standard' />
-    <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
-    <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
     <!-- Other module inherits -->
+    <inherits name="com.google.gwt.uibinder.UiBinder" />
+    <inherits name="com.google.gwt.inject.Inject" />
+    <inherits name='com.gwtplatform.dispatch.Dispatch' />
 
-    <!-- Specify the app entry point class. -->
-    <entry-point class='com.gwtplatform.samples.mobile.client.Gwtpmobilesample' />
+    <inherits name='com.gwtplatform.mvp.MvpWithEntryPoint' />
 
-    <!-- Specify the paths for translatable code -->
     <source path='client' />
     <source path='shared' />
 
     <!-- Form Factors -->
     <inherits name="com.gwtplatform.samples.mobile.FormFactor" />
 
-    <!-- This is required for Gwt-Platform Proxy's generator -->
-    <set-configuration-property name="gin.ginjector"
-        value="com.gwtplatform.samples.mobile.client.gin.ClientGinjector" />
+    <set-configuration-property name="gin.ginjector.modules" 
+         value="com.gwtplatform.samples.mobile.client.gin.ClientModule" />
 </module>

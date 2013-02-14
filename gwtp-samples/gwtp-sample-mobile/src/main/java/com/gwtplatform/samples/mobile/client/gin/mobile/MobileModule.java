@@ -16,6 +16,7 @@
 
 package com.gwtplatform.samples.mobile.client.gin.mobile;
 
+import com.gwtplatform.dispatch.client.gin.DispatchAsyncModule;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
 import com.gwtplatform.mvp.client.annotations.GaAccount;
@@ -30,6 +31,7 @@ public class MobileModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         install(new DefaultModule(DefaultPlaceManager.class));
+        install(new DispatchAsyncModule());
         install(new ApplicationMobileModule());
 
         // DefaultPlaceManager Places
