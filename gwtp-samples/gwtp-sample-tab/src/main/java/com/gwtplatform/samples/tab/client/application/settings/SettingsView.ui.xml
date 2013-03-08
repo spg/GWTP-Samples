@@ -12,6 +12,9 @@
     <g:HTMLPanel addStyleNames="{style.panel}">
         <h1>Settings page</h1>
 
+        <g:Button ui:field="fireTrueButton">Fire true</g:Button>
+        <g:Button ui:field="fireFalseButton">Fire false</g:Button>
+
         <p>
             Currently logged in as:
             <g:InlineLabel ui:field="userPrivileges" />

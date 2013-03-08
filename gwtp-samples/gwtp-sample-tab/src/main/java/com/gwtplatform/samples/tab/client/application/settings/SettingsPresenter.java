@@ -16,6 +16,7 @@
 
 package com.gwtplatform.samples.tab.client.application.settings;
 
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -26,6 +27,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.TabInfo;
 import com.gwtplatform.mvp.client.proxy.TabContentProxyPlace;
 import com.gwtplatform.samples.tab.client.application.ApplicationPresenter;
+import com.gwtplatform.samples.tab.client.application.event.BooleanEvent;
 import com.gwtplatform.samples.tab.client.place.NameTokens;
 import com.gwtplatform.samples.tab.client.security.CurrentUser;
 
@@ -35,7 +37,7 @@ import com.gwtplatform.samples.tab.client.security.CurrentUser;
  * It demonstrates the option 1 described in {@link TabInfo}.
  */
 public class SettingsPresenter extends Presenter<SettingsPresenter.MyView, SettingsPresenter.MyProxy> implements
-        SettingsUiHandlers {
+        SettingsUiHandlers, BooleanEvent.BooleanEventHandler {
     /**
      * {@link SettingsPresenter}'s proxy.
      */
@@ -44,25 +46,37 @@ public class SettingsPresenter extends Presenter<SettingsPresenter.MyView, Setti
     @TabInfo(container = ApplicationPresenter.class, label = "Settings", priority = 2)
     // The third tab in the main page
     public interface MyProxy extends TabContentProxyPlace<SettingsPresenter> {
-    }
 
+    }
     /**
      * {@link SettingsPresenter}'s view.
      */
     public interface MyView extends View, HasUiHandlers<SettingsUiHandlers> {
+
         void setAdmin(boolean isAdmin);
     }
-
     private final CurrentUser currentUser;
 
     @Inject
     public SettingsPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
             final CurrentUser currentUser) {
         super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetTabContent);
-        
+
         this.currentUser = currentUser;
-        
+
         view.setUiHandlers(this);
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        addRegisteredHandler(BooleanEvent.getType(), this);
+    }
+
+    @Override
+    public void onBooleanEvent(BooleanEvent event) {
+        Window.alert("Event caught in SettingsPresenter: " + event.bool());
     }
 
     @Override

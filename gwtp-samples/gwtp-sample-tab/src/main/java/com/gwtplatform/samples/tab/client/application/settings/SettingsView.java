@@ -17,6 +17,8 @@
 package com.gwtplatform.samples.tab.client.application.settings;
 
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -24,24 +26,33 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+import com.gwtplatform.samples.tab.client.application.event.BooleanEvent;
 
 /**
  * The view implementation for {@link com.gwtplatform.samples.tab.client.application.settings.SettingsPresenter} .
  */
-public class SettingsView extends ViewWithUiHandlers<SettingsUiHandlers> implements SettingsPresenter.MyView {
+public class SettingsView extends ViewWithUiHandlers<SettingsUiHandlers> implements SettingsPresenter.MyView, HasHandlers {
     public interface Binder extends UiBinder<Widget, SettingsView> {
     }
-
-    private final Widget widget;
 
     @UiField
     InlineLabel userPrivileges;
     @UiField
     Button togglePrivileges;
+    @UiField
+    Button fireTrueButton;
+    @UiField
+    Button fireFalseButton;
+
+    private final Widget widget;
+    private final EventBus eventBus;
 
     @Inject
-    public SettingsView(Binder uiBinder) {
+    public SettingsView(Binder uiBinder,
+            EventBus eventBus) {
+        this.eventBus = eventBus;
         widget = uiBinder.createAndBindUi(this);
     }
 
@@ -60,6 +71,21 @@ public class SettingsView extends ViewWithUiHandlers<SettingsUiHandlers> impleme
             togglePrivileges.setText("Toggle to admin user");
         }
         togglePrivileges.setVisible(true);
+    }
+
+    @Override
+    public void fireEvent(GwtEvent<?> event) {
+        eventBus.fireEvent(event);
+    }
+
+    @UiHandler("fireTrueButton")
+    void onFireTrueButton(ClickEvent event) {
+        BooleanEvent.fire(this, true);
+    }
+
+    @UiHandler("fireFalseButton")
+    void onFireFalseButton(ClickEvent event) {
+        BooleanEvent.fire(this, false);
     }
 
     @UiHandler("togglePrivileges")

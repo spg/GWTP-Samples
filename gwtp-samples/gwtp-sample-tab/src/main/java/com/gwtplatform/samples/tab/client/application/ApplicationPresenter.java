@@ -17,6 +17,7 @@
 package com.gwtplatform.samples.tab.client.application;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.ChangeTabHandler;
@@ -36,6 +37,7 @@ import com.gwtplatform.mvp.client.proxy.AsyncCallSucceedEvent;
 import com.gwtplatform.mvp.client.proxy.AsyncCallSucceedHandler;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
+import com.gwtplatform.samples.tab.client.application.event.BooleanEvent;
 import com.gwtplatform.samples.tab.client.security.CurrentUserChangedEvent;
 import com.gwtplatform.samples.tab.client.security.CurrentUserChangedEvent.CurrentUserChangedHandler;
 
@@ -46,7 +48,8 @@ import com.gwtplatform.samples.tab.client.security.CurrentUserChangedEvent.Curre
  */
 public class ApplicationPresenter extends
         TabContainerPresenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy> implements
-        CurrentUserChangedHandler, AsyncCallStartHandler, AsyncCallFailHandler, AsyncCallSucceedHandler {
+        CurrentUserChangedHandler, AsyncCallStartHandler, AsyncCallFailHandler, AsyncCallSucceedHandler,
+        BooleanEvent.BooleanEventHandler {
 
     /**
      * {@link ApplicationPresenter}'s proxy.
@@ -85,6 +88,18 @@ public class ApplicationPresenter extends
     @Inject
     public ApplicationPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
         super(eventBus, view, proxy, TYPE_SetTabContent, TYPE_RequestTabs, TYPE_ChangeTab, RevealType.Root);
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        addRegisteredHandler(BooleanEvent.getType(), this);
+    }
+
+    @Override
+    public void onBooleanEvent(BooleanEvent event) {
+        Window.alert("Event handled in ApplicationPresenter: " + event.bool());
     }
 
     @ProxyEvent
